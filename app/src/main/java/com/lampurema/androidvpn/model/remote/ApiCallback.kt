@@ -1,3 +1,4 @@
+package com.lampurema.androidvpn.model.remote
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

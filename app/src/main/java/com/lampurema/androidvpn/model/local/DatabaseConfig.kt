@@ -1,4 +1,4 @@
-package com.lampurema.androidvpn.model.database
+package com.lampurema.androidvpn.model.local
 
 /**
  * Created by Ly Ho V. on January 08, 2019

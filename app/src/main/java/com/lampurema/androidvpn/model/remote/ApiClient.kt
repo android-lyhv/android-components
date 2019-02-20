@@ -58,24 +58,23 @@ class ApiClient private constructor() {
             .writeTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
             .connectTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
         // Config retrofit
-        val apiRetrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.HOST_API)
             .client(builderApi.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        apiService = apiRetrofit.create(ApiService::class.java)
+        apiService = retrofit.create(ApiService::class.java)
     }
 
     companion object {
         private const val TIME_OUT = 30 * 1000
         private var sApiClient: ApiClient? = null
 
-        val instance: ApiClient
-            get() {
-                if (sApiClient == null) {
-                    sApiClient = ApiClient()
-                }
-                return sApiClient!!
+        fun getInstance(): ApiClient? {
+            if (sApiClient == null) {
+                sApiClient = ApiClient()
             }
+            return sApiClient
+        }
     }
 }

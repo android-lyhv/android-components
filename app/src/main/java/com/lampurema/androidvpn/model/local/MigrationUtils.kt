@@ -1,4 +1,4 @@
-package com.lampurema.androidvpn.model.database
+package com.lampurema.androidvpn.model.local
 
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.migration.Migration
