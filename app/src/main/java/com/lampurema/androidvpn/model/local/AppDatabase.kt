@@ -1,13 +1,13 @@
-package com.lampurema.androidvpn.model.database
+package com.lampurema.androidvpn.model.local
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import com.lampurema.androidvpn.model.entities.Entry
+import com.lampurema.androidvpn.model.entities.User
 
 @Database(
-    entities = [Entry::class],
+    entities = [User::class],
     version = DatabaseConfig.DB_SCHEMA_VERSION,
     exportSchema = false
 )

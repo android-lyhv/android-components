@@ -8,8 +8,8 @@ import android.support.annotation.NonNull
 /**
  * Created by Ly Ho V. on April 17, 2018
  */
-@Entity(tableName = "entry_table")
-class Entry {
+@Entity(tableName = "user_table")
+class User {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
