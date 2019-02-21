@@ -9,6 +9,6 @@ import com.lampurema.androidvpn.model.remote.ApiClient
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        ApiClient.getInstance.init(this)
+        ApiClient.getInstance()?.init(this)
     }
 }
