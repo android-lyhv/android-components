@@ -1,11 +1,11 @@
-package com.lyho.androidbase.model.remote
+package com.lyho.androidbase.model.network
 
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 
 /**
- * @author BiNC, Ly Ho V.
+ * @author Ly Ho V.
  */
 class ApiKeyStore private constructor() {
     fun saveKey(key: String, value: String) {

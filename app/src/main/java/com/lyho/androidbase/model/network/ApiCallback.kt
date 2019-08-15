@@ -1,4 +1,4 @@
-package com.lyho.androidbase.model.remote
+package com.lyho.androidbase.model.network
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

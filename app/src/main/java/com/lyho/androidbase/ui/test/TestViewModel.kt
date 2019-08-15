@@ -4,7 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.lyho.androidbase.model.entities.User
-import com.lyho.androidbase.model.remote.ApiCallback
+import com.lyho.androidbase.model.network.ApiCallback
 import com.lyho.androidbase.model.repository.UserRepository
 
 /**
@@ -14,7 +14,7 @@ import com.lyho.androidbase.model.repository.UserRepository
 class TestViewModel(application: Application, private val userRepository: UserRepository) : AndroidViewModel(application) {
     val mTestLiveData: MutableLiveData<User> = MutableLiveData()
     fun getUser(userId: Int) {
-        userRepository.getUser(userId, object : ApiCallback<User>() {
+        userRepository.getUserAsync(userId, object : ApiCallback<User>() {
             override fun success(t: User?) {
                 mTestLiveData.postValue(t)
             }

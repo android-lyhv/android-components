@@ -4,8 +4,8 @@ import android.app.Application
 import com.lyho.androidbase.model.helper.AppExecutors
 import com.lyho.androidbase.model.local.AppDatabase
 import com.lyho.androidbase.model.local.DatabaseDao
-import com.lyho.androidbase.model.remote.ApiClient
-import com.lyho.androidbase.model.remote.ApiService
+import com.lyho.androidbase.model.network.ApiClient
+import com.lyho.androidbase.model.network.ApiService
 
 /**
  * Created by Ly Ho V. on November 22, 2018

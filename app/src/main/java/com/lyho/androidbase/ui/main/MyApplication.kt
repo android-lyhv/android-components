@@ -1,7 +1,7 @@
 package com.lyho.androidbase.ui.main
 
 import android.app.Application
-import com.lyho.androidbase.model.remote.ApiClient
+import com.lyho.androidbase.model.network.ApiClient
 
 /**
  * Created by Ly Ho V. on 25 November 2017

@@ -1,7 +1,8 @@
-package com.lyho.androidbase.model.remote
+package com.lyho.androidbase.model.network
 
 import android.app.Application
 import android.text.TextUtils
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.lyho.androidbase.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
