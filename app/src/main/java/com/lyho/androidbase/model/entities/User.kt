@@ -14,4 +14,8 @@ class User {
     @NonNull
     @ColumnInfo(name = "id")
     var id = 0
+    @ColumnInfo(name = "name")
+    var name = ""
+    @ColumnInfo(name = "age")
+    var age = 0
 }

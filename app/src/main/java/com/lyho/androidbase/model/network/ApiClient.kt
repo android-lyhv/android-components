@@ -1,8 +1,8 @@
 package com.lyho.androidbase.model.network
 
-import android.app.Application
 import android.text.TextUtils
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.lyho.androidbase.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -14,10 +14,47 @@ import java.util.concurrent.TimeUnit
 /**
  * @author Ly Ho V.
  */
-class ApiClient private constructor() {
-    private var mApplication: Application? = null
-    var apiService: ApiService? = null
-        private set
+class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
+    init {
+        setupConfig(mNetworkConfig)
+    }
+
+    private lateinit var mRetrofit: Retrofit
+    private fun setupConfig(networkConfig: NetworkConfig) {
+        mNetworkConfig = networkConfig
+        // initialize OkHttpClient
+        val okkHttpConfig = OkHttpClient.Builder()
+                .addInterceptor(getHttpLoggingInterceptorDebug())
+                .addInterceptor(getHeaderToken())
+                .readTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
+                .writeTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
+                .connectTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
+                .build()
+        // Config retrofit
+        mRetrofit = Retrofit.Builder()
+                .baseUrl(networkConfig.hostUrl)
+                .client(okkHttpConfig)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+                .build()
+    }
+
+    fun <T : BaseApiService> createService(service: Class<T>): T {
+        return mRetrofit.create(service)
+    }
+
+    companion object {
+        private lateinit var sApiClient: ApiClient
+        fun getInstance(
+                networkConfig: NetworkConfig
+        ): ApiClient {
+            if (sApiClient == null) {
+                sApiClient = ApiClient(networkConfig)
+            }
+            return sApiClient
+        }
+    }
 
     /**
      * @return header appKey
@@ -25,17 +62,16 @@ class ApiClient private constructor() {
     private fun getHeaderToken(): Interceptor {
         return Interceptor { chain ->
             val original = chain.request()
-            val token = mApplication?.let { ApiKeyStore.getInstance(it) }?.get(ApiKeyStore.ACCESS_TOKEN_KEY)
+            val token = ApiKeyStore.getInstance(ApplicationConfig.getApplication())[ApiKeyStore.ACCESS_TOKEN_KEY]
             if (TextUtils.isEmpty(token)) {
                 return@Interceptor chain.proceed(original.newBuilder().build())
             } else {
                 val request = original.newBuilder()
-                    .header("token", token)
-                    .method(original.method(), original.body())
-                    .build()
+                        .header("token", token)
+                        .method(original.method(), original.body())
+                        .build()
                 return@Interceptor chain.proceed(request)
             }
-
         }
     }
 
@@ -43,39 +79,8 @@ class ApiClient private constructor() {
      * @return Log debug
      */
     private fun getHttpLoggingInterceptorDebug(): HttpLoggingInterceptor {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level =
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-        return httpLoggingInterceptor
-    }
-
-    fun init(application: Application) {
-        mApplication = application
-        // initialize OkHttpClient
-        val builderApi = OkHttpClient.Builder()
-            .addInterceptor(getHttpLoggingInterceptorDebug())
-            .addInterceptor(getHeaderToken())
-            .readTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-            .writeTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-            .connectTimeout(TIME_OUT.toLong(), TimeUnit.MILLISECONDS)
-        // Config retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.HOST_API)
-            .client(builderApi.build())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        apiService = retrofit.create(ApiService::class.java)
-    }
-
-    companion object {
-        private const val TIME_OUT = 30 * 1000
-        private var sApiClient: ApiClient? = null
-
-        fun getInstance(): ApiClient? {
-            if (sApiClient == null) {
-                sApiClient = ApiClient()
-            }
-            return sApiClient
+        return HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         }
     }
 }

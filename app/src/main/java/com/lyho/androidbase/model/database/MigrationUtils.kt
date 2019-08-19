@@ -1,4 +1,4 @@
-package com.lyho.androidbase.model.local
+package com.lyho.androidbase.model.database
 
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.migration.Migration

@@ -1,4 +1,4 @@
-package com.lyho.androidbase.model.local
+package com.lyho.androidbase.model.database
 
 /**
  * Created by Ly Ho V. on January 08, 2019

@@ -1,4 +1,5 @@
 package com.lyho.androidbase.model.network
+
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +22,7 @@ open class ApiCallback<T> : Callback<T> {
         when {
             response.isSuccessful -> success(response.body())
             response.errorBody() != null -> try {
-                val apiError = Gson().fromJson(response.errorBody().string(), ApiError::class.java)
+                val apiError = Gson().fromJson(response.errorBody().toString(), ApiError::class.java)
                 if (apiError.message.isBlank()) {
                     apiError.message = SERVER_ERROR
                 }

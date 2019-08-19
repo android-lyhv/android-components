@@ -5,7 +5,6 @@ import android.view.View
 /**
  * This interface is used to avoid clicking many times.
  *
- * @author Binc
  */
 abstract class BaseOnClickListener : View.OnClickListener {
 

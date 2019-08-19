@@ -2,10 +2,11 @@ package com.lyho.androidbase.model.repository
 
 import android.app.Application
 import com.lyho.androidbase.model.helper.AppExecutors
-import com.lyho.androidbase.model.local.AppDatabase
-import com.lyho.androidbase.model.local.DatabaseDao
+import com.lyho.androidbase.model.database.AppDatabase
+import com.lyho.androidbase.model.database.DatabaseDao
 import com.lyho.androidbase.model.network.ApiClient
 import com.lyho.androidbase.model.network.ApiService
+import com.lyho.androidbase.model.network.NetworkConfig
 
 /**
  * Created by Ly Ho V. on November 22, 2018
@@ -16,12 +17,12 @@ abstract class BaseRepository constructor(application: Application) {
         private set
     var mAppExecutors: AppExecutors
         private set
-    var mApiService: ApiService? = null
+    var apiService: ApiService? = null
         private set
 
     init {
         mDataDao = AppDatabase.getDatabase(application)?.dataDao()
         mAppExecutors = AppExecutors()
-        mApiService = ApiClient.getInstance()?.apiService
+        apiService = ApiClient.getInstance(NetworkConfig()).createService(ApiService::class.java)
     }
 }
