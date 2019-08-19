@@ -5,5 +5,5 @@ package com.lyho.androidbase.model.network
  * Copyright @ est-rouge. All rights reserved
  */
 class NetworkConfig : BaseNetworkConfig() {
-    // TODO some thing
+    // TODO something
 }

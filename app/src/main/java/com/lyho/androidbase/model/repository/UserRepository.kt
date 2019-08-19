@@ -1,6 +1,8 @@
 package com.lyho.androidbase.model.repository
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import com.lyho.androidbase.model.entities.User
 import com.lyho.androidbase.model.network.ApiCallback
 import com.lyho.androidbase.model.network.ApiError
@@ -10,6 +12,20 @@ import com.lyho.androidbase.model.network.ApiError
  * Copyright © 2017 Ly Ho V. All rights reserved.
  */
 class UserRepository(application: Application) : BaseRepository(application), IUserRepository {
+    override fun getUserLiveData(userId: Int): LiveData<User> {
+        val liveData = MutableLiveData<User>()
+        apiService.getUser(userId).enqueue(object : ApiCallback<User>() {
+            override fun success(t: User?) {
+                liveData.postValue(t)
+            }
+
+            override fun failure(apiError: ApiError?) {
+                liveData.postValue(null)
+            }
+        })
+        return liveData
+    }
+
     override fun getUserAsync(userId: Int, apiCallBack: ApiCallback<User>) {
         mAppExecutors.diskIO.execute {
             try {

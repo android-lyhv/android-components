@@ -1,9 +1,9 @@
 package com.lyho.androidbase.model.repository
 
 import android.app.Application
-import com.lyho.androidbase.model.helper.AppExecutors
 import com.lyho.androidbase.model.database.AppDatabase
 import com.lyho.androidbase.model.database.DatabaseDao
+import com.lyho.androidbase.model.helper.AppExecutors
 import com.lyho.androidbase.model.network.ApiClient
 import com.lyho.androidbase.model.network.ApiService
 import com.lyho.androidbase.model.network.NetworkConfig
@@ -17,7 +17,7 @@ abstract class BaseRepository constructor(application: Application) {
         private set
     var mAppExecutors: AppExecutors
         private set
-    var apiService: ApiService? = null
+    protected var apiService: ApiService
         private set
 
     init {

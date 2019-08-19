@@ -1,5 +1,6 @@
 package com.lyho.androidbase.model.repository
 
+import android.arch.lifecycle.LiveData
 import com.lyho.androidbase.model.entities.User
 import com.lyho.androidbase.model.network.ApiCallback
 
@@ -9,4 +10,5 @@ import com.lyho.androidbase.model.network.ApiCallback
  */
 interface IUserRepository {
     fun getUserAsync(userId: Int, apiCallBack: ApiCallback<User>)
+    fun getUserLiveData(userId: Int): LiveData<User>
 }
