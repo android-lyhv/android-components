@@ -1,6 +1,5 @@
 package com.lyho.androidbase.model.network
 
-import android.text.TextUtils
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.lyho.androidbase.BuildConfig
@@ -25,7 +24,7 @@ class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
         // initialize OkHttpClient
         val okkHttpConfig = OkHttpClient.Builder()
                 .addInterceptor(getHttpLoggingInterceptorDebug())
-                .addInterceptor(getHeaderToken())
+                .addInterceptor(applyHeaderKeys())
                 .readTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
                 .writeTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
                 .connectTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
@@ -59,18 +58,19 @@ class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
     /**
      * @return header appKey
      */
-    private fun getHeaderToken(): Interceptor {
+    private fun applyHeaderKeys(): Interceptor {
         return Interceptor { chain ->
             val original = chain.request()
-            val token = ApiKeyStore.getInstance(ApplicationConfig.getApplication())[ApiKeyStore.ACCESS_TOKEN_KEY]
-            if (TextUtils.isEmpty(token)) {
+            val keyNetworks = mNetworkConfig.keyNetworks
+            if (keyNetworks.isEmpty()) {
                 return@Interceptor chain.proceed(original.newBuilder().build())
             } else {
                 val request = original.newBuilder()
-                        .header("token", token)
-                        .method(original.method(), original.body())
-                        .build()
-                return@Interceptor chain.proceed(request)
+                keyNetworks.forEach {
+                    request.header(it.keyName, it.getValue())
+                }
+                request.method(original.method(), original.body())
+                return@Interceptor chain.proceed(request.build())
             }
         }
     }

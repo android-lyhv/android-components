@@ -4,13 +4,11 @@ package com.lyho.androidbase.model.network
  * Created by lyhv on August 19, 2019
  * Copyright @ est-rouge. All rights reserved
  */
-internal abstract class KeyNetwork {
-    private val mapKeys: HashMap<String, String> = HashMap()
-    fun setValue(key: String, value: String) {
-        mapKeys[key] = value
-    }
-
-    fun getValue(key: String): String {
-        return mapKeys.getValue(key)
+class KeyNetwork(keyName: String) : BaseKeyNetwork(keyName) {
+    override fun getValue(): String {
+        if (keyName.isBlank()) {
+            throw Exception("Key name can't blank")
+        }
+        return ApiKeyStore.getInstance(ApplicationConfig.getApplication())[keyName]
     }
 }

@@ -8,5 +8,6 @@ abstract class BaseNetworkConfig {
     lateinit var hostUrl: String
     var userAgent: String = ""
     var timeOut: Long = 30 * 1000
+    val keyNetworks = ArrayList<KeyNetwork>()
 }
 
