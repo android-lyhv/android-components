@@ -9,7 +9,7 @@ import java.net.HttpURLConnection
 /**
  * @author Ly Ho V.
  */
-open class ApiCallback<T> : Callback<T> {
+open class Result<T> : Callback<T> {
     companion object {
         private const val SERVER_ERROR = "Your internet connection appears to be offline"
     }
@@ -18,11 +18,12 @@ open class ApiCallback<T> : Callback<T> {
 
     open fun failure(apiError: ApiError?) {}
 
-    override fun onResponse(call: Call<T>, response: Response<T>) {
+    final override fun onResponse(call: Call<T>, response: Response<T>) {
         when {
             response.isSuccessful -> success(response.body())
             response.errorBody() != null -> try {
-                val apiError = Gson().fromJson(response.errorBody().toString(), ApiError::class.java)
+                val apiError =
+                    Gson().fromJson(response.errorBody().toString(), ApiError::class.java)
                 if (apiError.message.isBlank()) {
                     apiError.message = SERVER_ERROR
                 }
@@ -34,7 +35,7 @@ open class ApiCallback<T> : Callback<T> {
         }
     }
 
-    override fun onFailure(call: Call<T>, t: Throwable) {
+    final override fun onFailure(call: Call<T>, t: Throwable) {
         failure(ApiError(HttpURLConnection.HTTP_CLIENT_TIMEOUT, SERVER_ERROR))
     }
 }

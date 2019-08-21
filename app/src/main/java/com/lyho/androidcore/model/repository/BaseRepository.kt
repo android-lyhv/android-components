@@ -23,6 +23,6 @@ abstract class BaseRepository constructor(application: Application) {
     init {
         mDataDao = AppDatabase.getDatabase(application)?.dataDao()
         mAppExecutors = AppExecutors()
-        apiService = ApiClient.getInstance(NetworkConfig()).createService(ApiService::class.java)
+        apiService = ApiClient.newInstance(NetworkConfig()).createService(ApiService::class.java)
     }
 }
