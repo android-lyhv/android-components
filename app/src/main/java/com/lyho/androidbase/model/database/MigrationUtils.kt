@@ -1,7 +1,7 @@
 package com.lyho.androidbase.model.database
 
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room.migration.Migration
 
 /**
  * Created by Ly Ho V. on November 22, 2018

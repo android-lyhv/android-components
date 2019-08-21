@@ -1,6 +1,6 @@
 import android.graphics.Point
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.ViewGroup
 
 /**

@@ -1,6 +1,6 @@
-import android.support.annotation.IdRes
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import androidx.annotation.IdRes
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.lyho.androidbase.R
 
 

@@ -1,4 +1,4 @@
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Created by Ly Ho V. on April 04, 2018

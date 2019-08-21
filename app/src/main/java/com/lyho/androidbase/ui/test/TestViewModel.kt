@@ -1,7 +1,7 @@
 package com.lyho.androidbase.ui.test
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.lyho.androidbase.model.entities.User
 import com.lyho.androidbase.model.network.ApiCallback
 import com.lyho.androidbase.model.network.ApiError
