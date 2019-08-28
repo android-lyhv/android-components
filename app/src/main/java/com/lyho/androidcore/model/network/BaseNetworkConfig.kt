@@ -5,7 +5,7 @@ package com.lyho.androidcore.model.network
  * Copyright @ est-rouge. All rights reserved
  */
 abstract class BaseNetworkConfig {
-    lateinit var hostUrl: String
+    var hostUrl: String = "https://api.test.com/"
     var userAgent: String = ""
     var timeOut: Long = 30 * 1000
     val keyNetworks = ArrayList<KeyNetwork>()

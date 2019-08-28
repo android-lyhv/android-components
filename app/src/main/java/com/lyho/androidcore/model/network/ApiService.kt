@@ -11,7 +11,7 @@ import retrofit2.http.Path
  * Created by lyhv on August 19, 2019
  * Copyright @ est-rouge. All rights reserved
  */
-interface ApiService : BaseApiService {
+interface ApiService {
     @GET("v1/user/{id}")
     fun getUser(@Path("id") id: Int): Call<User>
 

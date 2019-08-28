@@ -1,6 +1,7 @@
 package com.lyho.androidcore.model.repository
 
 import androidx.lifecycle.LiveData
+import com.lyho.androidcore.model.entities.Result
 import com.lyho.androidcore.model.entities.User
 import com.lyho.androidcore.model.network.ResultCallBack
 
@@ -11,4 +12,5 @@ import com.lyho.androidcore.model.network.ResultCallBack
 interface IUserRepository {
     fun getUserAsync(userId: Int, apiCallBack: ResultCallBack<User>)
     fun getUserLiveData(userId: Int): LiveData<User>
+    suspend fun getUser(userId: Int): Result<User>
 }

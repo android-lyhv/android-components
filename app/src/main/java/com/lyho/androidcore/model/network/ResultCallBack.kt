@@ -1,5 +1,6 @@
 package com.lyho.androidcore.model.network
 
+import android.util.Log
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +20,7 @@ open class ResultCallBack<T> : Callback<T> {
     open fun failure(apiError: ApiError?) {}
 
     final override fun onResponse(call: Call<T>, response: Response<T>) {
+        Log.d("aaa", "Ok")
         when {
             response.isSuccessful -> success(response.body())
             response.errorBody() != null -> try {
@@ -36,6 +38,7 @@ open class ResultCallBack<T> : Callback<T> {
     }
 
     final override fun onFailure(call: Call<T>, t: Throwable) {
+        Log.d("aaa", t.message)
         failure(ApiError(HttpURLConnection.HTTP_CLIENT_TIMEOUT, SERVER_ERROR))
     }
 }
