@@ -18,25 +18,27 @@ class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
         setupConfig(mNetworkConfig)
     }
 
-    private lateinit var mRetrofit: Retrofit
+    lateinit var mRetrofit: Retrofit
+        private set
+
     private fun setupConfig(networkConfig: NetworkConfig) {
         mNetworkConfig = networkConfig
         // initialize OkHttpClient
         val okkHttpConfig = OkHttpClient.Builder()
-                .addInterceptor(getHttpLoggingInterceptorDebug())
-                .addInterceptor(applyHeaderKeys())
-                .readTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
-                .writeTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
-                .connectTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
-                .build()
+            .addInterceptor(getHttpLoggingInterceptorDebug())
+            .addInterceptor(applyHeaderKeys())
+            .readTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
+            .writeTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
+            .connectTimeout(networkConfig.timeOut, TimeUnit.MILLISECONDS)
+            .build()
         // Config retrofit
         mRetrofit = Retrofit.Builder()
-                .baseUrl(networkConfig.hostUrl)
-                .client(okkHttpConfig)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
-                .build()
+            .baseUrl(networkConfig.hostUrl)
+            .client(okkHttpConfig)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+            .build()
     }
 
     fun <T : BaseApiService> createService(service: Class<T>): T {
@@ -44,14 +46,10 @@ class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
     }
 
     companion object {
-        private lateinit var sApiClient: ApiClient
-        fun getInstance(
-                networkConfig: NetworkConfig
+        fun newInstance(
+            networkConfig: NetworkConfig
         ): ApiClient {
-            if (sApiClient == null) {
-                sApiClient = ApiClient(networkConfig)
-            }
-            return sApiClient
+            return ApiClient(networkConfig)
         }
     }
 
@@ -80,7 +78,8 @@ class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
      */
     private fun getHttpLoggingInterceptorDebug(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            level =
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         }
     }
 }

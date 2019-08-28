@@ -13,6 +13,7 @@
   + Retrofit 2
   + Glide 2
   + Android X SDK
+  + DataBinding
   
   
 Copyright © 2017 Ly Ho V. All rights reserved.
