@@ -9,7 +9,7 @@ import java.net.HttpURLConnection
 /**
  * @author Ly Ho V.
  */
-open class Result<T> : Callback<T> {
+open class ResultCallBack<T> : Callback<T> {
     companion object {
         private const val SERVER_ERROR = "Your internet connection appears to be offline"
     }
