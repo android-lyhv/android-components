@@ -9,9 +9,17 @@ import com.lyho.androidcore.model.entities.User
 import com.lyho.androidcore.model.network.ApiError
 import com.lyho.androidcore.model.network.ResultCallBack
 import com.lyho.androidcore.model.repository.IUserRepository
+import com.lyho.androidcore.ui.common.helper.LogHelper
 import com.lyho.androidcore.ui.common.viewmodel.BaseAndroidViewModel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -34,8 +42,8 @@ class TestViewModel(application: Application, private val userRepository: IUserR
     }
 
     fun getUserSuppned() {
-        viewModelScope.launch {
-            Log.d("aaa", "start")
+        viewModelScope.launch(Dispatchers.IO) {
+            LogHelper.logCouroutines(Thread.currentThread().name)
             val test = async { userRepository.getUser(1) }
             val test1 = async { userRepository.getUser(2) }
             Log.d("aaa", test.await().toString())
@@ -45,11 +53,14 @@ class TestViewModel(application: Application, private val userRepository: IUserR
             val test3 = userRepository.getUser(4)
             Log.d("aaa", test3.toString())
         }
+        LogHelper.logCouroutines(Thread.currentThread().name)
     }
 
     fun getUserSuppnedChain() {
         val channel = Channel<Result<User>>()
         viewModelScope.launch {
+            LogHelper.logCouroutines(System.getProperties().toString())
+            LogHelper.logCouroutines(Thread.currentThread().name)
             Log.d("aaaa", "start chain")
             for (i in 0 until 2) {
                 launch {
@@ -62,6 +73,33 @@ class TestViewModel(application: Application, private val userRepository: IUserR
             }
 
         }
+        Thread().run {
+            LogHelper.logCouroutines(Thread.currentThread().toString())
+        }
+    }
 
+    val handler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        LogHelper.logCouroutines("aaaa ${throwable.message}")
+    }
+    val coroutinContext = Job() + handler + Dispatchers.Main
+    val scope = CoroutineScope(coroutinContext)
+    fun testCancellation() {
+        viewModelScope.launch {
+            scope.launch {
+                try {
+                    delay(1000)
+                    getName()
+                } catch (e: CancellationException) {
+                    LogHelper.logCouroutines("Job Cancel ${e.message}")
+                }
+            }
+            delay(500)
+            scope.cancel()
+        }
+    }
+
+    suspend fun getName(): String {
+        delay(1000)
+        return "Ho Van Ly"
     }
 }
