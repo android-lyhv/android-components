@@ -2,29 +2,30 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.lyho.androidcore.R
+import com.lyho.androidcore.ui.common.BaseMainFragment
 
 
 object ActivityUtils {
     fun replaceFragment(
         fragmentManager: FragmentManager,
-        fragment: BaseFragment, @IdRes containerId: Int,
+        mainFragment: BaseMainFragment, @IdRes containerId: Int,
         typeAnimation: Int = TYPE_1
     ) {
         val transaction = fragmentManager.beginTransaction()
         setCustomAnimations(typeAnimation, transaction)
-        transaction.addToBackStack(fragment.getFragmentTag())
-        transaction.replace(containerId, fragment, fragment.getFragmentTag())
+        transaction.addToBackStack(mainFragment.getFragmentTag())
+        transaction.replace(containerId, mainFragment, mainFragment.getFragmentTag())
         transaction.commitAllowingStateLoss()
     }
 
     fun replaceFragmentWithoutStack(
         fragmentManager: FragmentManager,
-        fragment: BaseFragment, @IdRes containerId: Int,
+        mainFragment: BaseMainFragment, @IdRes containerId: Int,
         typeAnimation: Int = TYPE_1
     ) {
         val transaction = fragmentManager.beginTransaction()
         setCustomAnimations(typeAnimation, transaction)
-        transaction.replace(containerId, fragment, fragment.getFragmentTag())
+        transaction.replace(containerId, mainFragment, mainFragment.getFragmentTag())
         transaction.commitAllowingStateLoss()
     }
 

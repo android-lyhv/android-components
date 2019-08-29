@@ -1,8 +1,9 @@
-package com.lyho.androidcore.ui.common
+package com.lyho.androidcore.ui.common.recyclerview
 
 import android.content.Context
 import android.graphics.Rect
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
@@ -18,31 +19,32 @@ class DividerSpacingItemDecoration
  * @param context     Current context, it will be used to access resources.
  * @param orientation Divider orientation. Should be [.HORIZONTAL] or [.VERTICAL].
  */
-    (context: Context, orientation: Int, val mSpacing: Int = 0) :
+    (
+    context: Context,
+    private val orientation: Int,
+    private val mSpacing: Int = 0,
+    private val drawableResourceId: Int? = null
+) :
     DividerItemDecoration(context, orientation) {
-    private val mOrientation: Int = orientation
+    init {
+        drawableResourceId?.let { it ->
+            val drawable = ContextCompat.getDrawable(context, it)
+            drawable?.let {
+                setDrawable(it)
+            }
+        }
+    }
+
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val position = parent.getChildViewHolder(view).adapterPosition
-        val itemCount = state.itemCount
         super.getItemOffsets(outRect, view, parent, state)
-        when (mOrientation) {
-            HORIZONTAL -> {
-                outRect.left = mSpacing
-                outRect.right = if (position == itemCount - 1) mSpacing else 0
-                outRect.top = mSpacing
-                outRect.bottom = mSpacing
-            }
-            VERTICAL -> {
-                outRect.left = mSpacing
-                outRect.right = mSpacing
-                outRect.top = if (position == 0) mSpacing else mSpacing
-                outRect.bottom = if (position == itemCount - 1) mSpacing else 0
-            }
-        }
+        outRect.left = mSpacing
+        outRect.right = mSpacing
+        outRect.top = mSpacing
+        outRect.bottom = mSpacing
     }
 }

@@ -1,36 +1,35 @@
-package com.lyho.androidcore.ui.common
+package com.lyho.androidcore.ui.common.recyclerview
 
 import android.view.View
+import kotlin.math.abs
 
 /**
  * This interface is used to avoid clicking many times.
  *
  */
-abstract class BaseOnClickListener : View.OnClickListener {
-
-    abstract fun onItemClick(v: View)
+interface OnBlockViewClickListener : View.OnClickListener {
 
     override fun onClick(v: View) {
         if (isBlockingClick) {
             return
         }
-        onItemClick(v)
     }
 
     companion object {
         private const val MIN_CLICK_INTERVAL = 500
 
-        private var sLastClickTime: Long = 0
+        private var mLastClickTime: Long = 0
 
         val isBlockingClick: Boolean
-            get() = isBlockingClick(MIN_CLICK_INTERVAL.toLong())
+            get() = isBlockingClick(
+                MIN_CLICK_INTERVAL.toLong()
+            )
 
         private fun isBlockingClick(minClickInterval: Long): Boolean {
-            val isBlocking: Boolean
             val currentTime = System.currentTimeMillis()
-            isBlocking = Math.abs(currentTime - sLastClickTime) < minClickInterval
+            val isBlocking = abs(currentTime - mLastClickTime) < minClickInterval
             if (!isBlocking) {
-                sLastClickTime = currentTime
+                mLastClickTime = currentTime
             }
             return isBlocking
         }
