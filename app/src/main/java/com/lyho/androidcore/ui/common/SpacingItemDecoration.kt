@@ -1,10 +1,10 @@
 package com.lyho.androidcore.ui.common
 
 import android.graphics.Rect
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import android.view.View
 
 class SpacingItemDecoration @JvmOverloads constructor(
     private val mSpacing: Int,
