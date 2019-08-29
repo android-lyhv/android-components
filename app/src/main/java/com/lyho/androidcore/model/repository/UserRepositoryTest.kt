@@ -8,8 +8,8 @@ import com.lyho.androidcore.model.entities.User
 import com.lyho.androidcore.model.network.ApiError
 import com.lyho.androidcore.model.network.ResultCallBack
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * Created by Ly Ho V. on February 20, 2019
@@ -17,17 +17,21 @@ import kotlin.coroutines.suspendCoroutine
  */
 class UserRepositoryTest(application: Application) : BaseRepository(application), IUserRepository {
     override suspend fun getUser(userId: Int): Result<User> {
-        delay(2000)
-        return suspendCoroutine {
-            apiService.getUser(userId).enqueue(object : ResultCallBack<User>() {
+        return suspendCancellableCoroutine {
+            val call = apiService.getUser(userId)
+            it.invokeOnCancellation { thrower ->
+                it.resume(Result.Error(Exception("aaa $userId")))
+                call.cancel()
+            }
+            call.enqueue(object : ResultCallBack<User>() {
                 override fun success(t: User?) {
                     it.resume(Result.Success(User()))
                 }
+
                 override fun failure(apiError: ApiError?) {
                     it.resume(Result.Error(Exception(apiError?.message)))
                 }
             })
-            it.resume(Result.Error(Exception("aaa $userId")))
         }
     }
 

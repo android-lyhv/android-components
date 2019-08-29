@@ -1,15 +1,10 @@
 package com.lyho.androidcore.ui.test
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.lyho.androidcore.R
 import com.lyho.androidcore.model.entities.User
-import com.lyho.androidcore.model.repository.UserRepository
 import com.lyho.androidcore.model.repository.UserRepositoryTest
 
 @SuppressLint("Registered")
@@ -18,22 +13,23 @@ class TestActivity : AppCompatActivity(), TestActivityViewListener {
         // TODO update ui here
     }
 
-    private lateinit var mTestViewModel: TestViewModel
+    private val mTestViewModel by lazy {
+        TestCoroutineViewModel.newInstance(application, UserRepositoryTest(application))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Create View Model
-        mTestViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TestViewModel(this@TestActivity.application, UserRepositoryTest(this@TestActivity.application)) as T
-            }
-        }).get(TestViewModel::class.java)
         // Observer data
-        mTestViewModel.getUser(0)
-        mTestViewModel.mTestLiveData.observe(this, Observer {
-            onNewUser(it)
-        })
-        mTestViewModel.getUserSuppned()
-        mTestViewModel.getUserSuppnedChain()
+//        mTestViewModel.getUser(0)
+//        mTestViewModel.mTestLiveData.observe(this, Observer {
+//            onNewUser(it)
+//        })
+//        mTestViewModel.getUserSuppned()
+//        mTestViewModel.getUserSuppnedChain()
+//        mTestViewModel.runCoroutineScope()
+//        mTestViewModel.runSupperVisoCoroutineScope()
+//        mTestViewModel.childJobDefine()
+        mTestViewModel.asynchronousFlow()
     }
 }
