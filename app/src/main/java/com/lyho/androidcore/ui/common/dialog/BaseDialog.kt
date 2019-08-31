@@ -1,4 +1,4 @@
-package uk.co.snaprevise.snaprevise.ui.common
+package com.lyho.androidcore.ui.common.dialog
 
 import android.app.Dialog
 import android.graphics.Color
@@ -18,9 +18,15 @@ import com.lyho.androidcore.R
 abstract class BaseDialog : DialogFragment() {
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(getWithDialog(), getHeightDialog())
+        dialog?.window?.apply {
+            setLayout(getWithDialog(), getHeightDialog())
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            getDimAmount()?.let {
+                setDimAmount(it)
+            }
+        }
+        dialog?.setCanceledOnTouchOutside(isCanTouchOutside())
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -29,14 +35,16 @@ abstract class BaseDialog : DialogFragment() {
         }
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
+    final override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = getCustomDialog(savedInstanceState)
         dialog.window?.apply {
             requestFeature(Window.FEATURE_NO_TITLE)
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
-        dialog.setCanceledOnTouchOutside(isCanTouchOutside())
         return dialog
+    }
+
+    open fun getCustomDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState)
     }
 
     open fun getWithDialog(): Int {
@@ -46,19 +54,9 @@ abstract class BaseDialog : DialogFragment() {
         return size.x - getPixelMarginDialog()
     }
 
-    open fun getPixelMarginDialog(): Int {
-        return resources.getDimensionPixelSize(R.dimen._30sdp)
-    }
-
-    open fun getHeightDialog(): Int {
-        return ViewGroup.LayoutParams.WRAP_CONTENT
-    }
-
-    open fun getWindowAnimation(): Int? {
-        return null
-    }
-
-    open fun isCanTouchOutside(): Boolean {
-        return true
-    }
+    open fun getDimAmount(): Float? = null
+    open fun getPixelMarginDialog() = resources.getDimensionPixelSize(R.dimen._30sdp)
+    open fun getHeightDialog(): Int = ViewGroup.LayoutParams.WRAP_CONTENT
+    open fun getWindowAnimation(): Int? = null
+    open fun isCanTouchOutside(): Boolean = true
 }
