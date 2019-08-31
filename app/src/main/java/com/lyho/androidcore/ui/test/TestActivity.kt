@@ -2,7 +2,6 @@ package com.lyho.androidcore.ui.test
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,9 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.lyho.androidcore.R
 import com.lyho.androidcore.model.entities.User
 import com.lyho.androidcore.model.repository.UserRepository
+import com.lyho.androidcore.ui.common.BaseActivity
 
 @SuppressLint("Registered")
-class TestActivity : AppCompatActivity(), TestActivityViewListener {
+class TestActivity : BaseActivity(), TestActivityViewListener {
     override fun onNewUser(user: User?) {
         // TODO update ui here
     }

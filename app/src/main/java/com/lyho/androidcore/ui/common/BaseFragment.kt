@@ -1,14 +1,15 @@
 package com.lyho.androidcore.ui.common
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 
 /**
- * Created by Ly Ho V. on April 04, 2018
+ * Created by lyhv on August 31, 2019
+ * Copyright @ est-rouge. All rights reserved
  */
-abstract class BaseActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
     override fun onDestroy() {
         super.onDestroy()
         cancel()

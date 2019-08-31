@@ -7,6 +7,7 @@ import com.lyho.androidcore.model.network.ApiError
 import com.lyho.androidcore.model.network.ResultCallBack
 import com.lyho.androidcore.model.repository.UserRepository
 import com.lyho.androidcore.ui.common.viewmodel.BaseAndroidViewModel
+import kotlinx.coroutines.cancel
 
 /**
  * Created by Ly Ho V. on February 20, 2019

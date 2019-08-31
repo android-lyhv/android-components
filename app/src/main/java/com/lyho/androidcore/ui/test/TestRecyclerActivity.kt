@@ -37,9 +37,7 @@ class TestRecyclerActivity : AppCompatActivity(), TestActivityViewListener {
         val dialogLoading = DialogLoading.newInstance(this)
         dialogLoading.show(supportFragmentManager, null)
         Handler().postDelayed(Runnable {
-            //dialogLoading.dismiss()
+            dialogLoading.dismiss()
         }, 5000)
-
-
     }
 }
