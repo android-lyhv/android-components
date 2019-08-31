@@ -3,6 +3,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.lyho.androidcore.R
 import com.lyho.androidcore.ui.common.BaseMainFragment
+import com.lyho.androidcore.ui.common.getFullNameTag
 
 
 object ActivityUtils {
@@ -13,8 +14,8 @@ object ActivityUtils {
     ) {
         val transaction = fragmentManager.beginTransaction()
         setCustomAnimations(typeAnimation, transaction)
-        transaction.addToBackStack(mainFragment.getFragmentTag())
-        transaction.replace(containerId, mainFragment, mainFragment.getFragmentTag())
+        transaction.addToBackStack(mainFragment.getFullNameTag())
+        transaction.replace(containerId, mainFragment, mainFragment.getFullNameTag())
         transaction.commitAllowingStateLoss()
     }
 
@@ -25,7 +26,7 @@ object ActivityUtils {
     ) {
         val transaction = fragmentManager.beginTransaction()
         setCustomAnimations(typeAnimation, transaction)
-        transaction.replace(containerId, mainFragment, mainFragment.getFragmentTag())
+        transaction.replace(containerId, mainFragment, mainFragment.getFullNameTag())
         transaction.commitAllowingStateLoss()
     }
 

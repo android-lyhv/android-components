@@ -41,7 +41,7 @@ class ApiClient private constructor(var mNetworkConfig: NetworkConfig) {
             .build()
     }
 
-    fun <T : BaseApiService> createService(service: Class<T>): T {
+    fun <T> createService(service: Class<T>): T {
         return mRetrofit.create(service)
     }
 
