@@ -28,6 +28,9 @@ class TestRecyclerAdapter(context: Context) : BaseRecyclerAdapter<String, BaseVi
 
     inner class TestViewHolder(itemView: View) : BaseViewHolder(itemView),
         OnBlockViewClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         override fun onBind() {
             // TODO

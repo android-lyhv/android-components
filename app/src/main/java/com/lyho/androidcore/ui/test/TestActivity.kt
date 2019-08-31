@@ -1,12 +1,12 @@
 package com.lyho.androidcore.ui.test
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.lyho.androidcore.R
 import com.lyho.androidcore.model.entities.User
 import com.lyho.androidcore.model.repository.UserRepository
@@ -24,7 +24,10 @@ class TestActivity : AppCompatActivity(), TestActivityViewListener {
         // Create View Model
         mTestViewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TestViewModel(this@TestActivity.application, UserRepository(this@TestActivity.application)) as T
+                return TestViewModel(
+                    this@TestActivity.application,
+                    UserRepository(this@TestActivity.application)
+                ) as T
             }
         }).get(TestViewModel::class.java)
         // Observer data

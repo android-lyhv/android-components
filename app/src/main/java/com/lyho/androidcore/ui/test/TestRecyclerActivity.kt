@@ -2,11 +2,13 @@ package com.lyho.androidcore.ui.test
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lyho.androidcore.R
 import com.lyho.androidcore.model.entities.User
+import com.lyho.androidcore.ui.common.dialog.DialogLoading
 import com.lyho.androidcore.ui.common.recyclerview.DividerSpacingItemDecoration
 import kotlinx.android.synthetic.main.activity_main_recycler.*
 
@@ -32,5 +34,12 @@ class TestRecyclerActivity : AppCompatActivity(), TestActivityViewListener {
             )
             adapter = TestRecyclerAdapter(this@TestRecyclerActivity)
         }
+        val dialogLoading = DialogLoading.newInstance(this)
+        dialogLoading.show()
+        Handler().postDelayed(Runnable {
+            dialogLoading.dismiss()
+        }, 5000)
+
+
     }
 }

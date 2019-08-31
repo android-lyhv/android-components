@@ -2,6 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/app_name"
         android:textSize="@dimen/_10sdp"
