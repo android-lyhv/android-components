@@ -1,4 +1,4 @@
-# Android Core Project
+# Android architecture components
 ### Languge: 
   + Kotlin
   
