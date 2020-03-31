@@ -12,7 +12,7 @@
             android:supportsRtl="true"
             android:name="com.lyho.androidcore.ui.main.MyApplication"
             android:theme="@style/AppTheme">
-        <activity android:name="com.lyho.androidcore.ui.test.TestActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
