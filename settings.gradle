@@ -1,2 +1,3 @@
 include ':app'
 include ':stories_indicator'
+include ':cubic-chart'
