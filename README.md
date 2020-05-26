@@ -1,19 +1,23 @@
-# Android architecture components
-### Languge: 
-  + Kotlin
+# Components
+### Language:
+    + Kotlin
   
-### Architecture:
-  + MVVM (Model View View Model)
+### Architectural Pattern:
+    + MVVM (Model View View Model)
+   
+### Technical Stack:
+    + Coroutine
+    + AndroidX SDK
+    + Room Database
+    + Dagger
+    + Retrofit Network
+    + Compose
+    + DataBinding
+    + ViewBinding
   
-### Component:
-  + RxJava, RxAndroid
-  + Dagger 2
-  + Kotlin Coroutine
-  + Room Database
-  + Retrofit 2
-  + Glide 2
-  + Android X SDK
-  + DataBinding
-  
+### Menu:
+    + Coroutine
+    + Compose
+    + Library
   
 Copyright © 2017 Ly Ho V. All rights reserved.

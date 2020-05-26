@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.addListener
+import androidx.core.math.MathUtils
 import com.github.mikephil.charting.animation.ChartAnimator
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart

@@ -22,13 +22,13 @@ class CubicChartActivity : AppCompatActivity() {
     fun update() {
         val yVals =
             ArrayList<Entry>()
-        for (i in 0 until 30) {
+        for (i in 0 until 10 step 1) {
             val mult: Float = 30f + 1
             val `val` =
                 (Math.random() * mult).toFloat() + 10 // + (float)
             // ((mult *
             // 0.1) / 10);
-            yVals.add(Entry(i.toFloat(), `val`))
+            yVals.add(Entry(i.toFloat(), kotlin.random.Random.nextInt(3).toFloat()))
         }
         cubic_chart.updateGraph(yVals, false)
     }
