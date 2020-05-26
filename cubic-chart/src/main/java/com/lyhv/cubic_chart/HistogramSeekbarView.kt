@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.graphics.Path
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.addListener
@@ -32,74 +31,101 @@ class HistogramSeekbarView : LinearLayout {
         ValueAnimator.ofFloat(0.0f, 1.0f).apply {
             interpolator = ANIMATION_INTERPOLATOR
         }
-    private lateinit var histogram: LineChart
+    private lateinit var histogramChart: LineChart
     var lastRealMax = 1.0
     var lastRealMin = 0.0
-
-    /* access modifiers changed from: private */
     private var previousDataSet: LineDataSet? = null
 
-    private var activeGraphFillDrawable: Drawable = AppCompatResources.getDrawable(
+    private val defaultColor = Color.parseColor("#B5DCFA")
+    private val defaultGraphFillDrawable = AppCompatResources.getDrawable(
         context,
         R.drawable.histogram_fill_gradient
     )!!
+    private var activeGraphFillDrawable: Drawable = defaultGraphFillDrawable
     private lateinit var graphInactiveFillRenderer: GraphInactiveFillRenderer
     private val graphValueTextSize = 0
-    private val inactiveGraphColor = Color.parseColor("#B5DCFA")
+    private var inactiveGraphColor = defaultColor
     private var lastSeekbarMaxValue = 1.0
     private var lastSeekbarMinValue = 0.0
+    private var viewPortLeftOffset = 0
+    private var viewPortRightOffset = 0
 
-    //  private RangeSeekBar noListingsDisabledDummySeekbar;
-    private val viewPortLeftOffset = 0
-    private val viewPortRightOffset = 0
-
-    constructor(context: Context?) : super(context) {
-        initializeHistogram()
+    constructor(context: Context) : super(context) {
+        init(context, null)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(
+    constructor(context: Context, attrs: AttributeSet?) : super(
         context,
         attrs
     ) {
+        init(context, attrs)
+    }
+
+    private fun init(context: Context, attrs: AttributeSet?) {
+        initializeAttributes(context, attrs)
+        inflate(context, R.layout.histogram_seak_bar_view, this)
         initializeHistogram()
     }
 
-    private fun initializeHistogram() {
-        View.inflate(context, R.layout.histogram_seak_bar_view, this)
-        histogram = findViewById(R.id.line_chart)
-        histogram.data = LineData()
-        histogram.setTouchEnabled(false)
-        histogram.description = null
-        histogram.setDrawGridBackground(false)
-        histogram.setDrawBorders(false)
-        histogram.setDrawMarkers(false)
-        histogram.legend.isEnabled = false
-        histogram.setNoDataText(null)
-        histogram.setHardwareAccelerationEnabled(true)
-        histogram.axisLeft.setDrawGridLines(false)
-        histogram.axisLeft.setDrawAxisLine(false)
-        histogram.axisLeft.setDrawLabels(false)
-        histogram.axisLeft.spaceTop = 30.0f
-        histogram.axisLeft.axisMinimum = 0.0f
-        histogram.axisRight.isEnabled = false
-        histogram.xAxis.setDrawGridLines(false)
-        histogram.xAxis.setDrawAxisLine(false)
-        histogram.xAxis.setDrawLabels(false)
-        histogram.setViewPortOffsets(
-            viewPortLeftOffset.toFloat(),
-            0.0f,
-            viewPortRightOffset.toFloat(),
-            0.0f
-        )
-        graphInactiveFillRenderer = GraphInactiveFillRenderer(
-            histogram,
-            histogram.animator,
-            histogram.viewPortHandler
-        ).apply {
-            inactiveColor = inactiveGraphColor
+    private fun initializeAttributes(context: Context, attrs: AttributeSet?) {
+        attrs?.let {
+            val typedArray = context.obtainStyledAttributes(attrs, R.styleable.HistogramSeekbarView)
+            inactiveGraphColor = typedArray.getColor(
+                R.styleable.HistogramSeekbarView_inactiveGraphColor
+                , defaultColor
+            )
+            activeGraphFillDrawable =
+                typedArray.getDrawable(R.styleable.HistogramSeekbarView_activeGraphFillDrawable)
+                    ?: defaultGraphFillDrawable
+            viewPortLeftOffset = typedArray.getDimensionPixelSize(
+                R.styleable.HistogramSeekbarView_viewPortLeftOffset,
+                0
+            )
+            viewPortRightOffset = typedArray.getDimensionPixelSize(
+                R.styleable.HistogramSeekbarView_viewPortRightOffset,
+                0
+            )
+            logger<HistogramSeekbarView>().debug("aaa $viewPortRightOffset")
+            typedArray.recycle()
         }
-        histogram.renderer = graphInactiveFillRenderer
+    }
 
+    private fun initializeHistogram() {
+        histogramChart = findViewById(R.id.line_chart)
+        histogramChart.apply {
+            data = LineData()
+            setTouchEnabled(false)
+            description = null
+            setDrawGridBackground(false)
+            setDrawBorders(false)
+            setDrawMarkers(false)
+            legend.isEnabled = false
+            setNoDataText(null)
+            setHardwareAccelerationEnabled(true)
+            axisLeft.setDrawGridLines(false)
+            axisLeft.setDrawAxisLine(false)
+            axisLeft.setDrawLabels(false)
+            axisLeft.spaceTop = 30.0f
+            axisLeft.axisMinimum = 0.0f
+            axisRight.isEnabled = false
+            xAxis.setDrawGridLines(false)
+            xAxis.setDrawAxisLine(false)
+            xAxis.setDrawLabels(false)
+            setViewPortOffsets(
+                viewPortLeftOffset.toFloat(),
+                0.0f,
+                viewPortRightOffset.toFloat(),
+                0.0f
+            )
+            graphInactiveFillRenderer = GraphInactiveFillRenderer(
+                histogramChart,
+                histogramChart.animator,
+                histogramChart.viewPortHandler
+            ).apply {
+                inactiveColor = inactiveGraphColor
+            }
+            histogramChart.renderer = graphInactiveFillRenderer
+        }
         slider.addOnChangeListener { slider, value, fromUser ->
             updateProgressSeekBar(0.0, value.toDouble())
         }
@@ -118,43 +144,36 @@ class HistogramSeekbarView : LinearLayout {
     ) {
         if (entries.isEmpty()) {
             graphInactiveFillRenderer.setForceInactive(true)
-            histogram.invalidate()
+            histogramChart.invalidate()
             // TODO update seak bar here
             return
         }
         var lineDataSet =
-            histogram.lineData.getDataSetByLabel(DATA_SET_LABEL, false) as? LineDataSet
+            histogramChart.lineData.getDataSetByLabel(DATA_SET_LABEL, false) as? LineDataSet
         if (lineDataSet == null) {
-            lineDataSet = LineDataSet(null, DATA_SET_LABEL)
-            lineDataSet.color = -1
-            lineDataSet.setDrawFilled(true)
-            lineDataSet.fillDrawable = activeGraphFillDrawable
-            lineDataSet.setDrawIcons(false)
-            lineDataSet.isHighlightEnabled = false
-            lineDataSet.setDrawHighlightIndicators(false)
-            lineDataSet.setDrawCircles(false)
-            lineDataSet.setDrawCircleHole(false)
-            lineDataSet.lineWidth = 0.0f
-            lineDataSet.highlightLineWidth = 0.0f
-            lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-            lineDataSet.valueTextSize = graphValueTextSize.toFloat()
-            lineDataSet.valueFormatter = CHART_VALUE_FORMATER
-            lineDataSet.setDrawValues(z)
-            histogram.data.addDataSet(lineDataSet)
+            lineDataSet = LineDataSet(null, DATA_SET_LABEL).apply {
+                color = -1
+                setDrawFilled(true)
+                fillDrawable = activeGraphFillDrawable
+                setDrawIcons(false)
+                isHighlightEnabled = false
+                setDrawHighlightIndicators(false)
+                setDrawCircles(false)
+                setDrawCircleHole(false)
+                lineWidth = 0.0f
+                highlightLineWidth = 0.0f
+                mode = LineDataSet.Mode.CUBIC_BEZIER
+                valueTextSize = graphValueTextSize.toFloat()
+                valueFormatter = VALUEFORMATER
+                setDrawValues(z)
+            }
+            histogramChart.data.addDataSet(lineDataSet)
         }
+
         if (this.previousDataSet == null) {
             this.previousDataSet = lineDataSet
         }
-        val fArr = FloatArray(entries.size)
 
-        entries.forEachIndexed { index, entry ->
-            val lineDataSet2 = this.previousDataSet
-            fArr[index] =
-                if (lineDataSet2 == null || lineDataSet2.entryCount <= 0) 0.0f else previousDataSet?.getEntryForXValue(
-                    entry.x,
-                    entry.y
-                )!!.y
-        }
         val newFarr = entries.map {
             val dataSet = this.previousDataSet
             val invalidDataSet = dataSet == null || dataSet.entryCount <= 0
@@ -167,74 +186,57 @@ class HistogramSeekbarView : LinearLayout {
                 ).y
             }
         }
-        logger<HistogramSeekbarView>().debug("${fArr[1]}")
         histogramTransitionAnimator.removeAllListeners()
         histogramTransitionAnimator.addListener(
             onEnd = {
-                logger<HistogramSeekbarView>().debug("doOnEnd")
                 previousDataSet = lineDataSet
             },
             onCancel = {
-                logger<HistogramSeekbarView>().debug("doOnCancel")
                 previousDataSet = lineDataSet
             }
         )
         histogramTransitionAnimator.addUpdateListener {
-            updateChart(lineDataSet, entries, fArr, histogram.lineData, it)
+            onAnimationUpdateChart(lineDataSet, entries, newFarr, histogramChart.lineData, it)
         }
 
-        if (this.histogramTransitionAnimator.isRunning) {
-            this.histogramTransitionAnimator.cancel()
+        if (histogramTransitionAnimator.isRunning) {
+            histogramTransitionAnimator.cancel()
         }
         histogramTransitionAnimator.start()
     }
 
     @SuppressLint("RestrictedApi")
-    private fun updateChart(
+    private fun onAnimationUpdateChart(
         lineDataSet: LineDataSet,
-        list: List<Entry>,
-        fArr: FloatArray,
+        entries: List<Entry>,
+        fArr: List<Float>,
         lineData: LineData,
         valueAnimator: ValueAnimator
     ) {
         val animatedFraction = valueAnimator.animatedFraction
-        val newEntrys = arrayListOf<Entry>()
-        newEntrys.addAll(list)
         lineDataSet.clear()
-        val size = newEntrys.size
-        for (i in 0 until size) {
-            val entry = newEntrys[i]
+        entries.forEachIndexed { index, entry ->
             lineDataSet.addEntry(
                 Entry(
                     entry.x,
                     AnimationUtils.lerp(
-                        fArr[i],
+                        fArr[index],
                         entry.y,
                         animatedFraction
                     )
                 )
             )
-            logger<HistogramSeekbarView>().debug(
-                "${Entry(
-                    entry.x,
-                    AnimationUtils.lerp(
-                        fArr[i],
-                        entry.y,
-                        animatedFraction
-                    )
-                )}"
-            )
         }
         lineData.notifyDataChanged()
         graphInactiveFillRenderer.setForceInactive(false)
-        histogram.notifyDataSetChanged()
-        histogram.invalidate()
+        histogramChart.notifyDataSetChanged()
+        histogramChart.invalidate()
     }
 
     fun updateGraphInactiveFill(d: Double, d2: Double) {
         graphInactiveFillRenderer.activeMinXBound = d.toFloat()
         graphInactiveFillRenderer.activeMaxXBound = d2.toFloat()
-        histogram.invalidate()
+        histogramChart.invalidate()
     }
 
     fun updateProgressSeekBar(
@@ -254,6 +256,9 @@ class HistogramSeekbarView : LinearLayout {
         lastSeekbarMaxValue = d2
     }
 
+    /**
+     * Handler
+     */
     internal class GraphInactiveFillRenderer(
         lineDataProvider: LineDataProvider,
         chartAnimator: ChartAnimator,
@@ -306,7 +311,7 @@ class HistogramSeekbarView : LinearLayout {
             NumberFormat.getIntegerInstance()
     }
 
-    private object CHART_VALUE_FORMATER : ValueFormatter() {
+    private object VALUEFORMATER : ValueFormatter() {
         override fun getFormattedValue(
             value: Float,
             entry: Entry?,
