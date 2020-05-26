@@ -10,7 +10,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.lyho.androidcore"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -29,21 +29,53 @@ android {
             buildConfigField "String", "HOST_API", '"https://api.lapurema.com/"'
         }
     }
-}
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 dependencies {
+    ext.versions = [
+            appcompat        : "1.1.0",
+            recyclerview     : "1.1.0-beta05",
+            constraint_layout: "2.0.0-beta2",
+            lifecycle        : "2.2.0-beta01",
+            paging           : "1.0.0",
+            dagger           : "2.24",
+            okhttp           : "3.14.0",
+            retrofit         : "2.6.2",
+            room             : "2.2.0",
+            coroutines       : "1.3.2",
+            stetho           : "1.5.1",
+            blur_view        : "1.2.1",
+            design_support   : "25.3.1",
+            material         : "1.1.0-beta01",
+            view_pager       : "1.0.0-beta05",
+            navigation       : "2.1.0"
+    ]
+
     // App dependencies
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':cubic-chart')
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation "com.android.support:design:$versions.design_support"
+    implementation "com.google.android.material:material:1.2.0-alpha06"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
+
     // Glide
     def glide_version = "4.8.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -77,9 +109,6 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
     // Permission
     implementation 'com.karumi:dexter:4.2.0'
-    // Reactivex
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     // Dagger
     def daggerVersion = "2.17"
     implementation "com.google.dagger:dagger:$daggerVersion"
