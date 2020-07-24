@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.lyhv.component.main.MyApplication"
+        android:name="com.lyhv.component.ui.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".corountine.CoroutineActivity">
+        <activity android:name="com.lyhv.component.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
