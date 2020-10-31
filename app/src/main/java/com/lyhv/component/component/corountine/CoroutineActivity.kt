@@ -1,4 +1,4 @@
-package com.lyhv.component.extension.corountine
+package com.lyhv.component.component.corountine
 
 import android.annotation.SuppressLint
 import android.app.Activity

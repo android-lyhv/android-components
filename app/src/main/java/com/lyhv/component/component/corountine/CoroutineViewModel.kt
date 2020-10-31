@@ -1,4 +1,4 @@
-package com.lyhv.component.extension.corountine
+package com.lyhv.component.component.corountine
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

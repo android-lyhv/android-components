@@ -1,4 +1,4 @@
-package com.lyhv.component.extension.motionlayout
+package com.lyhv.component.component.motionlayout
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
