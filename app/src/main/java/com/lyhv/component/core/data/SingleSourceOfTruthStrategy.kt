@@ -1,13 +1,12 @@
 package com.lyhv.component.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.map
+
 fun <T> getFlow(
     networkCall: suspend () -> Result<T>
 ): Flow<Result<T>> = flow {
@@ -16,53 +15,60 @@ fun <T> getFlow(
     emit(responseStatus)
 }.flowOn(Dispatchers.IO)
 
-fun <T, A> resultLiveData(
-    databaseQuery: () -> LiveData<T>,
+/**
+ * Returns a [Flow] whose values are cached in local storage
+ */
+fun <T, A> resultFlow(
+    databaseQuery: () -> Flow<T>,
     networkCall: suspend () -> Result<A>,
-    saveCallResult: suspend (A) -> Unit
-): LiveData<Result<T>> =
-    liveData(Dispatchers.IO) {
-        emit(Result.Loading())
-        val source = databaseQuery.invoke().map { Result.Success(it) as Result<T> }
+    saveCallResult: suspend (A) -> Unit,
+    emitLoading: Boolean = true
+): Flow<Result<T>> = flow {
+    if (emitLoading) emit(Result.Loading())
+    val source = databaseQuery.invoke().map { Result.Success(it) }
 
-        val responseStatus = networkCall.invoke()
-        if (responseStatus is Result.Success) {
-            saveCallResult(responseStatus.data!!)
-        }
-        emitSource(source)
-    }
-
-fun <T> resultLiveDataNoCache(
-    networkCall: suspend () -> Result<T>
-): LiveData<Result<T>> = liveData(Dispatchers.IO) {
-    emit(Result.Loading())
-    val responseStatus = networkCall.invoke()
-    if (responseStatus is Result.Success) {
-        emit(responseStatus)
-    } else if (responseStatus is Result.Failure) {
-        emit(responseStatus)
-    }
-}
-
-fun <T> resultLiveEvent(
-    networkCall: suspend () -> Result<T>
-): LiveData<Result<T>> =
-    liveData(Dispatchers.IO) {
-        emit(Result.Loading())
-        val responseStatus = networkCall.invoke()
-        emit(responseStatus)
-    }
-
-suspend fun <T> resultCachingData(
-    networkCall: suspend () -> Result<T>,
-    saveCallResult: suspend (T) -> Unit,
-    onFailed: (Boolean) -> Unit = {}
-) = withContext(Dispatchers.IO) {
     val responseStatus = networkCall.invoke()
     if (responseStatus is Result.Success) {
         saveCallResult(responseStatus.data!!)
-        onFailed.invoke(false)
+        emitAll(source)
     } else if (responseStatus is Result.Failure) {
-        onFailed.invoke(true)
+        emit(
+            Result.Failure(
+                message = responseStatus.message,
+                status = responseStatus.status,
+                errors = responseStatus.errors
+            )
+        )
     }
+}.flowOn(Dispatchers.IO)
+
+/**
+ * Returns a [Flow] whose values are cached in memory
+ */
+fun <A> resultFlowNoCache(
+    networkCall: suspend () -> Result<A>,
+    emitLoading: Boolean = true
+): Flow<Result<A>> = flow<Result<A>> {
+    if (emitLoading) emit(Result.Loading())
+    val responseStatus = networkCall.invoke()
+    if (responseStatus is Result.Success) {
+        emit(Result.Success(responseStatus.data!!))
+    } else if (responseStatus is Result.Failure) {
+        emit(
+            Result.Failure(
+                message = responseStatus.message,
+                status = responseStatus.status,
+                errors = responseStatus.errors
+            )
+        )
+    }
+}.flowOn(Dispatchers.IO)
+
+fun <T> getFirstResultFailure(vararg results: Result<*>): Result.Failure<T> {
+    val firstResultFailure = results.firstOrNull { it is Result.Failure } as Result.Failure
+    return Result.Failure<T>(
+        message = firstResultFailure.message,
+        status = firstResultFailure.status,
+        errors = firstResultFailure.errors
+    )
 }

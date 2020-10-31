@@ -13,10 +13,11 @@ def PASSWORD_BASIC_AUTH = "PASSWORD_BASIC_AUTH"
 def X_HTTP_SERVICETOKEN = "X_HTTP_SERVICETOKEN"
 def GOOGLE_SERVER_CLIENT_ID = "GOOGLE_SERVER_CLIENT_ID"
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
+    buildToolsVersion "29.0.3"
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -92,12 +93,12 @@ dependencies {
             // App
             appcompat           : "1.1.0",
             archLifecycleVersion: "2.2.0",
-            material            : "1.3.0-alpha01",
-            navigation          : "2.3.0",
-            coroutines          : "1.3.4",
+            material            : "1.2.1",
+            navigation          : "2.3.1",
+            coroutines          : "1.3.9",
             lifecycle           : "2.2.0",
             worker              : "2.3.2",
-            dagger              : "2.28",
+            dagger              : "2.28.1",
             design_support      : "25.3.1",
             html_textview       : "3.8",
             // Database
@@ -106,11 +107,11 @@ dependencies {
             recyclerview        : "1.1.0",
             paging              : "2.1.2",
             card_view           : "1.0.0",
-            constraint_layout   : "2.0.0-beta8",
+            constraint_layout   : "2.0.4",
             view_pager          : "1.0.0",
             // Network
-            retrofit            : "2.8.1",
-            okhttp              : "4.4.1",
+            retrofit            : "2.9.0",
+            okhttp              : "4.7.2",
             // Image loader
             glide               : "4.10.0",
             // Util
@@ -150,7 +151,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
 
     //kotlin
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.core:core-ktx:1.3.2'
 
     // Has font issue with version 1.2.0
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -171,11 +172,11 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
-    implementation 'androidx.fragment:fragment:1.2.5'
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
 
     //zxing qr code
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
-    implementation 'com.google.zxing:core:3.3.3'
+    implementation 'com.google.zxing:core:3.4.0'
 
     // Logging
     implementation 'org.slf4j:slf4j-api:1.7.25'
@@ -197,10 +198,8 @@ dependencies {
 
     //Logging compile error
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    implementation "androidx.localbroadcastmanager:localbroadcastmanager:$versions.localbroadcastmanager"
 
     //paging
-    implementation "androidx.paging:paging-runtime:$versions.paging"
     implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
 
     // Scale unit with screen

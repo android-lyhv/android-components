@@ -12,15 +12,12 @@ sealed class Result<out T> {
         val errors: JSONObject? = null
     ) : Result<T>()
 
-    class Finish<out T> : Result<T>() // Only use to simulate SingleLiveEvent for liveData
-
     override fun toString(): String {
         return when (this) {
             is Success -> "Success[data=$data]"
             is SuccessEmptyBody -> "SuccessEmptyBody"
             is Failure -> "Error[exception=$message]"
             is Loading -> "Loading"
-            is Finish -> "Finish"
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.era.member.core.api
+package com.lyhv.component.core.api
 
 import com.lyhv.component.core.data.Result
 import org.json.JSONObject
