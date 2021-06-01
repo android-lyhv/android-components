@@ -22,9 +22,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
-         dataBinding = true
+        compose = true
+        dataBinding = true
         // for view binding :
         //viewBinding = true
+    }
+    composeOptions {
+        kotlinCompilerVersion = "1.4.32"
+        kotlinCompilerExtensionVersion = "1.0.0-beta07"
     }
     buildTypes {
         release {
@@ -203,4 +208,25 @@ dependencies {
 
     //paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
+    /*Compose*/
+    // Navigation
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha01"
+    // Activity
+    implementation "androidx.activity:activity-compose:1.3.0-alpha08"
+    // Ui
+    implementation("androidx.compose.ui:ui:1.0.0-beta07")
+    // Tooling support (Previews, etc.)
+    implementation("androidx.compose.ui:ui-tooling:1.0.0-beta07")
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation("androidx.compose.foundation:foundation:1.0.0-beta07")
+    // Material Design
+    implementation("androidx.compose.material:material:1.0.0-beta07")
+    // Material design icons
+    implementation("androidx.compose.material:material-icons-core:1.0.0-beta07")
+    implementation("androidx.compose.material:material-icons-extended:1.0.0-beta07")
+    // Integration with observables
+    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-beta07")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.0-beta07")
+    // UI Tests
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.0-beta07")
 }
