@@ -1,17 +1,17 @@
-apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
 
 def VARIABLE_STRING = "String"
 def BASE_API_URL = "BASE_API_URL"
 def USER_BASIC_AUTH = "USER_BASIC_AUTH"
 def PASSWORD_BASIC_AUTH = "PASSWORD_BASIC_AUTH"
-def X_HTTP_SERVICETOKEN = "X_HTTP_SERVICETOKEN"
+def X_HTTP_SERVICE_TOKEN = "X_HTTP_SERVICETOKEN"
 def GOOGLE_SERVER_CLIENT_ID = "GOOGLE_SERVER_CLIENT_ID"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -19,7 +19,6 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
@@ -46,33 +45,33 @@ android {
     productFlavors {
         dev {
             applicationId "com.lyhv.component.dev"
-            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, X_HTTP_SERVICETOKEN, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"710740295057-bjvc9fn48tgscfu8098d7aupfpeab5li.apps.googleusercontent.com"'
+            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"google_id"'
             versionCode 1
             versionName "1.0.0"
         }
 
         staging {
             applicationId "com.lyhv.component.stg"
-            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, X_HTTP_SERVICETOKEN, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"710740295057-bjvc9fn48tgscfu8098d7aupfpeab5li.apps.googleusercontent.com"'
+            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"google_id"'
             versionCode 1
             versionName "1.0.0"
         }
 
         production {
             applicationId "com.lyhv.component"
-            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, X_HTTP_SERVICETOKEN, '"https://epfs-api.testing.est-rouge-tech.com/api/v1"'
-            buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"710740295057-bjvc9fn48tgscfu8098d7aupfpeab5li.apps.googleusercontent.com"'
+            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"google_id"'
             versionCode 1
             versionName "1.0.0"
         }
@@ -93,19 +92,19 @@ dependencies {
             // App
             appcompat           : "1.1.0",
             archLifecycleVersion: "2.2.0",
-            material            : "1.2.1",
-            navigation          : "2.3.1",
+            material            : "1.3.0",
+            navigation          : '2.3.5',
             coroutines          : "1.3.9",
-            lifecycle           : "2.2.0",
+            lifecycle           : "2.3.1",
             worker              : "2.3.2",
-            dagger              : "2.28.1",
-            design_support      : "25.3.1",
+            dagger              : '2.35.1',
+            design_support      : '28.0.0',
             html_textview       : "3.8",
             // Database
-            room                : "2.2.5",
+            room                : '2.3.0',
             // UI
-            recyclerview        : "1.1.0",
-            paging              : "2.1.2",
+            recyclerview        : "1.2.0",
+            paging              : '3.0.0',
             card_view           : "1.0.0",
             constraint_layout   : "2.0.4",
             view_pager          : "1.0.0",
@@ -113,11 +112,11 @@ dependencies {
             retrofit            : "2.9.0",
             okhttp              : "4.7.2",
             // Image loader
-            glide               : "4.10.0",
+            glide               : '4.12.0',
             // Util
             dynamicanimation    : "1.0.0",
             // Debug
-            stetho              : "1.5.1"
+            stetho              : "1.6.0"
 
     ]
     // App dependencies
@@ -144,14 +143,14 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
 
     //lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
 
     //kotlin
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.core:core-ktx:1.5.0'
 
     // Has font issue with version 1.2.0
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -172,14 +171,14 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
-    implementation 'androidx.fragment:fragment-ktx:1.2.5'
+    implementation 'androidx.fragment:fragment-ktx:1.3.4'
 
     //zxing qr code
     implementation 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
-    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.google.zxing:core:3.4.1'
 
     // Logging
-    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'com.github.tony19:logback-android:2.0.0'
 
     // Tools
@@ -191,9 +190,9 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
 
     //UTest
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //Logging compile error
@@ -201,7 +200,4 @@ dependencies {
 
     //paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
-
-    // Scale unit with screen
-    implementation 'com.intuit.sdp:sdp-android:1.0.5'
 }

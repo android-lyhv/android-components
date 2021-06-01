@@ -5,5 +5,5 @@
         android:background="?attr/selectableItemBackground"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/app_name"
-        android:textSize="@dimen/_10sdp"
+        android:textSize="10dp"
         android:textStyle="bold" />
