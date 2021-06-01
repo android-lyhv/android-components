@@ -2,10 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/menuFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/menuFragment"
         android:name="com.lyhv.component.component.MenuFragment"
         android:label="ConnectFragmentTest" />
+    <fragment
+        android:id="@+id/menuLibraryFragment"
+        android:name="com.lyhv.component.component.library.MenuLibraryFragment" />
+    <fragment
+        android:id="@+id/cubicChartFragment"
+        android:name="com.lyhv.component.component.library.CubicChartFragment" />
 </navigation>

@@ -10,37 +10,27 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/tv_coroutine"
+                android:id="@+id/tv_cubic_chart"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginBottom="1dp"
                 android:background="@color/greenColor"
                 android:gravity="center"
-                android:text="Coroutine"
+                android:text="Cubic Chart"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/tv_compose"
+                android:id="@+id/tv_stories_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginBottom="1dp"
                 android:background="@color/greenColor"
                 android:gravity="center"
-                android:text="Compose"
+                android:text="Stories Indicator"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/tv_library"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="1dp"
-                android:background="@color/greenColor"
-                android:gravity="center"
-                android:text="Library"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
         </LinearLayout>
 
     </ScrollView>

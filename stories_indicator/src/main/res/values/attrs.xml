@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StoriesIndicator">
+        <attr name="colorSelect" format="color" />
+        <attr name="colorUnSelect" format="color" />
+        <attr name="indicatorPadding" format="dimension" />
+        <attr name="duration" format="integer" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="interpolator" format="reference" />
+    </declare-styleable>
+</resources>

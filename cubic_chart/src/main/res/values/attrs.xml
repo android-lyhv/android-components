@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="HistogramSeekbarView">
+        <attr name="inactiveGraphColor" format="color" />
+        <attr name="activeGraphFillDrawable" format="reference" />
+        <attr name="viewPortLeftOffset" format="dimension" />
+        <attr name="viewPortRightOffset" format="dimension" />
+    </declare-styleable>
+</resources>
