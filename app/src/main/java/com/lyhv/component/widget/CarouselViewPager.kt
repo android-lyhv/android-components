@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import android.util.AttributeSet
 import android.view.View
 import com.lyhv.component.R
+import kotlin.math.abs
 
 class CarouselViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ViewPager(context, attrs), ViewPager.PageTransformer {
@@ -22,8 +23,8 @@ class CarouselViewPager @JvmOverloads constructor(context: Context, attrs: Attri
         clipToPadding = false
         clipChildren = false
         setPageTransformer(false, this)
-        mPageMargin = context.resources.getDimensionPixelSize(R.dimen._20sdp)
-        mMaxTranslateOffsetX = context.resources.getDimensionPixelSize(R.dimen._100sdp)
+        mPageMargin = context.resources.getDimensionPixelSize(R.dimen.page_marrgin)
+        mMaxTranslateOffsetX = context.resources.getDimensionPixelSize(R.dimen.page_offset)
         setPadding(mPageMargin, mPageMargin, mPageMargin, mPageMargin)
     }
 
@@ -36,7 +37,7 @@ class CarouselViewPager @JvmOverloads constructor(context: Context, attrs: Attri
         val centerXInViewPager = leftInScreen + view.measuredWidth / 2
         val offsetX = centerXInViewPager - measuredWidth / 2
         val offsetRate = offsetX.toFloat() * 0.3f / measuredWidth
-        val scaleFactor = 1 - Math.abs(offsetRate)
+        val scaleFactor = 1 - abs(offsetRate)
 
         if (scaleFactor > 0) {
             view.scaleX = scaleFactor

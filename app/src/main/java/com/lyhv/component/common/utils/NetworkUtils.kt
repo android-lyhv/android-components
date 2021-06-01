@@ -10,7 +10,7 @@ object NetworkUtils {
     fun isNetworkConnected(context: Context): Boolean {
         return try {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected
+            connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isConnected
         } catch (e: Exception) {
             false
         }
