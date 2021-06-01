@@ -2,6 +2,7 @@ package com.lyhv.component.component
 
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.lyhv.component.R
 import com.lyhv.component.common.base.BaseFragment
 import com.lyhv.component.common.logger
@@ -28,6 +29,9 @@ class MenuFragment : BaseFragment<HomeFragmentBinding>() {
     override fun initViews() {
         binding.tvCompose.setOnClickListener {
             // TODO
+        }
+        binding.tvLibrary.setOnClickListener {
+            findNavController().navigate(R.id.menuLibraryFragment)
         }
     }
 

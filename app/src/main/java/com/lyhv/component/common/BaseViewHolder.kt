@@ -2,13 +2,13 @@ package com.lyhv.component.common
 
 import android.content.Context
 import android.view.View
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
 /**
  * RecyclerViewで使用するViewHolderのベースクラス
  */
-abstract class BaseViewHolder<B : ViewDataBinding, T>(
+abstract class BaseViewHolder<B : ViewBinding, T>(
     val context: Context,
     val binding: B
 ) :

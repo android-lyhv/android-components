@@ -22,9 +22,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
-        dataBinding = true
+         dataBinding = true
         // for view binding :
-        // viewBinding = true
+        //viewBinding = true
     }
     buildTypes {
         release {
@@ -45,10 +45,10 @@ android {
     productFlavors {
         dev {
             applicationId "com.lyhv.component.dev"
-            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, BASE_API_URL, '"http://localhost:3000/api/v1"'
+            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"http://localhost:3000/api/v1"'
+            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"password"'
+            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"token"'
             buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"google_id"'
             versionCode 1
             versionName "1.0.0"
@@ -56,10 +56,10 @@ android {
 
         staging {
             applicationId "com.lyhv.component.stg"
-            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, BASE_API_URL, '"http://localhost:3000/api/v1"'
+            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"http://localhost:3000/api/v1"'
+            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"password"'
+            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"token"'
             buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"google_id"'
             versionCode 1
             versionName "1.0.0"
@@ -67,10 +67,10 @@ android {
 
         production {
             applicationId "com.lyhv.component"
-            buildConfigField VARIABLE_STRING, BASE_API_URL, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"https://demo.com/api/v1"'
-            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"https://demo.com/api/v1"'
+            buildConfigField VARIABLE_STRING, BASE_API_URL, '"http://localhost:3000/api/v1"'
+            buildConfigField VARIABLE_STRING, USER_BASIC_AUTH, '"http://localhost:3000/api/v1"'
+            buildConfigField VARIABLE_STRING, PASSWORD_BASIC_AUTH, '"password"'
+            buildConfigField VARIABLE_STRING, X_HTTP_SERVICE_TOKEN, '"token"'
             buildConfigField VARIABLE_STRING, GOOGLE_SERVER_CLIENT_ID, '"google_id"'
             versionCode 1
             versionName "1.0.0"
@@ -86,7 +86,9 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 }
-
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 dependencies {
     ext.versions = [
             // App
@@ -121,7 +123,8 @@ dependencies {
     ]
     // App dependencies
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
+    implementation project(":cubic_chart")
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "com.android.support:design:$versions.design_support"
 
     //after upgrading material version, please Check BottomSheetBehavior carefully: Login form, Oc29...

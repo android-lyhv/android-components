@@ -7,12 +7,12 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Path
+import android.graphics.PointF
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.animation.addListener
-import androidx.core.math.MathUtils
 import com.github.mikephil.charting.animation.ChartAnimator
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
@@ -72,8 +72,7 @@ class HistogramSeekbarView : LinearLayout {
         attrs?.let {
             val typedArray = context.obtainStyledAttributes(attrs, R.styleable.HistogramSeekbarView)
             inactiveGraphColor = typedArray.getColor(
-                R.styleable.HistogramSeekbarView_inactiveGraphColor
-                , defaultColor
+                R.styleable.HistogramSeekbarView_inactiveGraphColor, defaultColor
             )
             activeGraphFillDrawable =
                 typedArray.getDrawable(R.styleable.HistogramSeekbarView_activeGraphFillDrawable)
@@ -86,7 +85,6 @@ class HistogramSeekbarView : LinearLayout {
                 R.styleable.HistogramSeekbarView_viewPortRightOffset,
                 0
             )
-            logger<HistogramSeekbarView>().debug("aaa $viewPortRightOffset")
             typedArray.recycle()
         }
     }
@@ -140,9 +138,12 @@ class HistogramSeekbarView : LinearLayout {
     }
 
     fun updateGraph(
-        entries: List<Entry>,
+        points: List<PointF>,
         z: Boolean
     ) {
+        val entries = points.map {
+            Entry(it.x, it.y)
+        }
         if (entries.isEmpty()) {
             graphInactiveFillRenderer.setForceInactive(true)
             histogramChart.invalidate()
@@ -324,4 +325,3 @@ class HistogramSeekbarView : LinearLayout {
     }
 
 }
-
