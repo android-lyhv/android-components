@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MainActivity : HasSupportFragmentInjectorActivity() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
-    private val seatSelectionViewModel: MainViewModel by viewModels { factory }
+    private val mainViewModel: MainViewModel by viewModels { factory }
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Base</string>
+    <string name="app_name">Android Components</string>
     <string name="button">Button</string>
     <string name="negative_button_title">Ok</string>
 </resources>
