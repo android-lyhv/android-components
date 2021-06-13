@@ -29,7 +29,7 @@ android {
     }
     composeOptions {
         kotlinCompilerVersion = "1.4.32"
-        kotlinCompilerExtensionVersion = "1.0.0-beta07"
+        kotlinCompilerExtensionVersion = "1.0.0-beta08"
     }
     buildTypes {
         release {
@@ -208,25 +208,25 @@ dependencies {
 
     //paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
-    /*Compose*/
+    /**
+     * Compose Jetpack
+     */
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha01"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha02"
     // Activity
-    implementation "androidx.activity:activity-compose:1.3.0-alpha08"
-    // Ui
-    implementation("androidx.compose.ui:ui:1.0.0-beta07")
-    // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:1.0.0-beta07")
-    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation("androidx.compose.foundation:foundation:1.0.0-beta07")
-    // Material Design
-    implementation("androidx.compose.material:material:1.0.0-beta07")
-    // Material design icons
-    implementation("androidx.compose.material:material-icons-core:1.0.0-beta07")
-    implementation("androidx.compose.material:material-icons-extended:1.0.0-beta07")
-    // Integration with observables
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-beta07")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.0-beta07")
+    implementation "androidx.activity:activity-compose:1.3.0-beta01"
+    // Package
+    def compose_version = "1.0.0-beta08"
+    implementation "androidx.compose.animation:animation:$compose_version"
+    implementation "androidx.compose.compiler:compiler:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material-icons-core:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    // Tooling
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.0-beta07")
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 }
