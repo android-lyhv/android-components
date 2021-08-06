@@ -3,9 +3,9 @@ package com.lyhv.component.core.data
 import org.json.JSONObject
 
 sealed class Result<out T> {
-    class Loading<out T> : Result<T>()
+    object Loading : Result<Nothing>()
     data class Success<out T>(val data: T) : Result<T>()
-    class SuccessEmptyBody<out T> : Result<T>()
+    object SuccessEmptyBody : Result<Nothing>()
     data class Failure<out T>(
         val message: String,
         val status: Int,

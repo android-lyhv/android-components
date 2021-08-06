@@ -17,7 +17,7 @@ import com.squareup.moshi.Moshi
 abstract class AppDatabase : RoomDatabase() {
     companion object {
         lateinit var moshi: Moshi
-        const val DB_NAME = "era_memeber_android.db"
+        const val DB_NAME = "android_component.db"
         const val DB_VERSION = 1
     }
 }
