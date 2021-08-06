@@ -2,8 +2,8 @@ package com.lyhv.component.core.livedata
 
 import androidx.lifecycle.MediatorLiveData
 
-class ToggleLiveData : MediatorLiveData<Void>() {
+class ToggleLiveData : MediatorLiveData<Any>() {
     fun toggle() {
-        value = null
+        value = Any()
     }
 }

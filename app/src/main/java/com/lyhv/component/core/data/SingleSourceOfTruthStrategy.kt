@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 fun <T> getFlow(
     networkCall: suspend () -> Result<T>
 ): Flow<Result<T>> = flow {
-    emit(Result.Loading())
+    emit(Result.Loading)
     val responseStatus = networkCall.invoke()
     emit(responseStatus)
 }.flowOn(Dispatchers.IO)
@@ -24,7 +24,7 @@ fun <T, A> resultFlow(
     saveCallResult: suspend (A) -> Unit,
     emitLoading: Boolean = true
 ): Flow<Result<T>> = flow {
-    if (emitLoading) emit(Result.Loading())
+    if (emitLoading) emit(Result.Loading)
     val source = databaseQuery.invoke().map { Result.Success(it) }
 
     val responseStatus = networkCall.invoke()
@@ -49,7 +49,7 @@ fun <A> resultFlowNoCache(
     networkCall: suspend () -> Result<A>,
     emitLoading: Boolean = true
 ): Flow<Result<A>> = flow<Result<A>> {
-    if (emitLoading) emit(Result.Loading())
+    if (emitLoading) emit(Result.Loading)
     val responseStatus = networkCall.invoke()
     if (responseStatus is Result.Success) {
         emit(Result.Success(responseStatus.data!!))

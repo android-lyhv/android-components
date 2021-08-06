@@ -16,7 +16,7 @@ abstract class BaseDataSource {
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) return Result.Success(body)
-                if (response.code() == 204) return Result.SuccessEmptyBody()
+                if (response.code() == 204) return Result.SuccessEmptyBody
             }
             getResultFailure(response)
         } catch (e: Exception) {

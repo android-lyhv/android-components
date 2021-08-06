@@ -6,12 +6,6 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.lyhv.component.component.MenuFragment"
+        android:name="com.lyhv.component.ui.HomeFragment"
         android:label="ConnectFragmentTest" />
-    <fragment
-        android:id="@+id/menuLibraryFragment"
-        android:name="com.lyhv.component.component.library.MenuLibraryFragment" />
-    <fragment
-        android:id="@+id/cubicChartFragment"
-        android:name="com.lyhv.component.component.library.CubicChartFragment" />
 </navigation>

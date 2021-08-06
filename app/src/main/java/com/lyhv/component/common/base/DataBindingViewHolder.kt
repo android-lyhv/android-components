@@ -1,4 +1,4 @@
-package jp.eplus.efcmc.ui.base
+package com.lyhv.component.common.base
 
 import android.content.Context
 import android.view.LayoutInflater

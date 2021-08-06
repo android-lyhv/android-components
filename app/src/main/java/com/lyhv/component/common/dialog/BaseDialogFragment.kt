@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
@@ -22,9 +23,9 @@ abstract class BaseDialogFragment : DialogFragment() {
         isCancelable = cancelable()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         dialog?.window?.attributes?.windowAnimations = getStyleWindowAnimation()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     final override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
