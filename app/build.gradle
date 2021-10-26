@@ -18,7 +18,6 @@ android {
     defaultConfig {
         applicationId "com.lyhv.component"
         minSdkVersion 21
-        targetSdkVersion 30
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
@@ -96,8 +95,7 @@ dependencies {
     ext.versions = [
             // App
             appcompat           : "1.1.0",
-            archLifecycleVersion: "2.2.0",
-            material            : "1.3.0",
+            material            : "1.4.0",
             navigation          : '2.3.5',
             coroutines          : "1.5.1",
             lifecycle           : "2.3.1",
@@ -105,17 +103,19 @@ dependencies {
             dagger              : '2.35.1',
             design_support      : '28.0.0',
             html_textview       : "3.8",
+            // Compose
+            compose             : "1.0.4",
             // Database
             room                : '2.3.0',
             // UI
             recyclerview        : "1.2.1",
-            paging              : '3.0.0',
+            paging              : '3.0.1',
             card_view           : "1.0.0",
-            constraint_layout   : "2.1.0",
+            constraint_layout   : "2.1.1",
             view_pager          : "1.0.0",
             // Network
             retrofit            : "2.9.0",
-            okhttp              : "4.9.1",
+            okhttp              : "4.9.2",
             // Image loader
             glide               : '4.12.0',
             // Util
@@ -124,105 +124,68 @@ dependencies {
             stetho              : "1.6.0"
 
     ]
-    // App dependencies
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    /* AndroidX UI*/
     implementation "com.android.support:design:$versions.design_support"
-
-    //after upgrading material version, please Check BottomSheetBehavior carefully: Login form, Oc29...
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.recyclerview:recyclerview:$versions.recyclerview"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
-
-    //dagger
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
+    implementation "androidx.viewpager2:viewpager2:$versions.view_pager"
+    /* Compose */
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
+    implementation "androidx.activity:activity-compose:1.3.1"
+    implementation "androidx.compose.animation:animation:$versions.compose"
+    implementation "androidx.compose.compiler:compiler:$versions.compose"
+    implementation "androidx.compose.foundation:foundation:$versions.compose"
+    implementation "androidx.compose.material:material:$versions.compose"
+    implementation "androidx.compose.runtime:runtime-livedata:$versions.compose"
+    implementation "androidx.compose.ui:ui:$versions.compose"
+    implementation "androidx.compose.material:material-icons-core:$versions.compose"
+    implementation "androidx.compose.material:material-icons-extended:$versions.compose"
+    implementation "androidx.compose.ui:ui-tooling:$versions.compose"
+    /*Dagger*/
     implementation "com.google.dagger:dagger:$versions.dagger"
     implementation "com.google.dagger:dagger-android:$versions.dagger"
     implementation "com.google.dagger:dagger-android-support:$versions.dagger"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
-
-    //retrofit
-    implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
-    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
-
-    //lifecycle
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+    implementation 'androidx.fragment:fragment-ktx:1.3.6'
+    /*Coroutines*/
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    /*Lifecycle*/
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycle"
-
-    //kotlin
+    /*Retrofit*/
+    implementation "com.squareup.okhttp3:okhttp:$versions.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    /*Kotlin*/
     implementation 'androidx.core:core-ktx:1.6.0'
-
-    // Has font issue with version 1.2.0
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-
-    //room
+    /* Room*/
     implementation "androidx.room:room-ktx:$versions.room"
     implementation "androidx.room:room-runtime:$versions.room"
     kapt "androidx.room:room-compiler:$versions.room"
-
-    //coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
-
-    //view_pager2
-    implementation "androidx.viewpager2:viewpager2:$versions.view_pager"
-
-    //navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
-    implementation 'androidx.fragment:fragment-ktx:1.3.6'
-
-    //zxing qr code
-    implementation 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
-    implementation 'com.google.zxing:core:3.4.1'
-
     // Logging
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'com.github.tony19:logback-android:2.0.0'
-
     // Tools
     implementation "com.facebook.stetho:stetho:$versions.stetho"
     implementation "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
-
     //glide
     implementation "com.github.bumptech.glide:glide:$versions.glide"
     kapt "com.github.bumptech.glide:compiler:$versions.glide"
-
-    //UTest
+    /* UI Tests*/
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-
-    //Logging compile error
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-
-    //paging
-    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
-    /**
-     * Compose Jetpack
-     */
-    // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha06"
-    // Activity
-    implementation "androidx.activity:activity-compose:1.3.1"
-    // Package
-    def compose_version = "1.0.1"
-    implementation "androidx.compose.animation:animation:$compose_version"
-    implementation "androidx.compose.compiler:compiler:$compose_version"
-    implementation "androidx.compose.foundation:foundation:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material-icons-core:$compose_version"
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
-    // Tooling
-    implementation "androidx.compose.ui:ui-tooling:$compose_version"
-    // UI Tests
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 }

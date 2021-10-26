@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.lyhv.component.ui.HomeFragment"
+        android:name="com.lyhv.mvvm.ui.HomeFragment"
         android:label="ConnectFragmentTest" />
 </navigation>
